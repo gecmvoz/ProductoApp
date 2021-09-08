@@ -10,20 +10,20 @@ namespace Infraestructura.Productos
         private Producto[] productos;
 
         #region CRUD
-        public void Add(Producto p)
+        public void Add(Producto p) //AGREGAR
         {
             Add(p, ref productos);
         }
 
 
-        public int Update(Producto p)
+        public int Update(Producto p) //ACTUALIZA
         {
             if (p == null)
             {
                 throw new ArgumentException("El producto no puede see null");
 
             }
-            int index = GetIndexById(p.Id);
+            int index = GetIndexById(p.Id);//OBTIENE LA POSICION DEL ID
             if(index < 0)
             {
                 throw new Exception($"El producto con id {p.Id} no se encuentra.");
@@ -31,7 +31,31 @@ namespace Infraestructura.Productos
             productos[index] = p;
             return index;
         }
-        public Producto[] GetAll()
+
+        public bool Delete(Producto p) //Crea un temporal y no presenta el ultimo 
+        {
+            if (p == null)
+            {
+                throw new ArgumentException("El producto no puede see null");
+
+            }
+            int index = GetIndexById(p.Id);
+            if (index < 0)
+            {
+                throw new Exception($"El producto con id {p.Id} no se encuentra.");
+            }
+            if (index != productos.Length - 1) // si el arreglo es diferente a 
+            {
+                productos[index] = productos[productos.Length - 1];
+
+            }
+            Producto[] tmp = new Producto[productos.Length - 1];
+            Array.Copy(productos, tmp, tmp.Length);
+            productos = tmp;
+
+            return productos.Length == tmp.Length;
+        }
+        public Producto[] GetAll()//IMPRIME TODO EL OBJETO
         {
             return productos;
         }
@@ -43,7 +67,7 @@ namespace Infraestructura.Productos
 
         #region Private Method
 
-        //public void Add(Producto p, )
+        
 
         private void Add(Producto p, ref Producto[] pds) //agregar por referencia es  cualquier cambio que haga en el metodo va a surgir o afectar donde lo  estoy pasand
         {
@@ -88,6 +112,20 @@ namespace Infraestructura.Productos
             return index;
         }
 
+        #endregion
+
+        #region Queries
+        public Producto GetProductoById(int id)
+        {
+            if (id <= 0)
+            {
+                throw new ArgumentException($"El Id: {id} no es valido.");
+            }
+            int index = GetIndexById(id); // si el id es mayor lo manda a buscar, si no lo encuentra manda unnull en caso contrario devuelve la posicion del producto
+
+            return index <= 0 ? null : productos[index];
+       
+        }
         #endregion
 
     }
