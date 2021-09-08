@@ -8,16 +8,23 @@ namespace Domain.Entities
 {
    public  class Producto
     {
-        [JsonObject (MemberSerializacion.OptIn)] 
+        [JsonObject (Memberserialization.OptIn)]
 
         [JsonProperty]
         public int Id { get; set; }
+        [JsonProperty]
         public string Nombre { get; set; }
+        [JsonProperty]
         public string Descripcion { get; set; }
+        [JsonProperty]
         public int Existencia { get; set; }
+        [JsonProperty]
         public decimal Precio { get; set; }
+        [JsonProperty]
         public DateTime FechaVencimiento { get; set; }
+        [JsonProperty]
         public UnidadMedida UnidadMedida { get; set; }
+        [JsonProperty]
 
         public class ProductoPrecioComparer : IComparer<Producto>
         {
