@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enum;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -62,12 +63,27 @@ namespace Infraestructura.Productos
 
 
         #endregion
+        public Producto[] GetProductoByRangoPrecio(decimal start, decimal end)//desde donde comienza hasta donde termina
+        {
+            Producto[] tmp = null;
+            if (productos == null)
+            {
+                return tmp;
 
-
+            }
+            foreach (Producto p in productos)
+            {
+                if(p.Precio >= start && p.Precio <= end)
+                {
+                    Add(p, ref tmp);
+                }
+            }
+            return tmp;
+        }
 
         #region Private Method
 
-        
+
 
         private void Add(Producto p, ref Producto[] pds) //agregar por referencia es  cualquier cambio que haga en el metodo va a surgir o afectar donde lo  estoy pasand
         {
@@ -128,5 +144,37 @@ namespace Infraestructura.Productos
         }
         #endregion
 
+        public Producto[] GetProductosByUnidad(UnidadMedida um) //tmp es null no tiene absolutamente nada.
+        {
+            Producto[] tmp = null;
+            if (productos == null)
+            {
+                return tmp;
+            }
+            foreach (Producto p in productos)
+            {
+                if (p.UnidadMedida == um)
+                {
+                    Add(p, ref tmp); // llama el metodo add que se hizo anterior 
+                }
+            }
+            return tmp;
+        }
+        public Producto[] GetProductosByVencimiento(DateTime dt)
+        {
+            Producto[] tmp = null;
+            if (productos == null)
+            {
+                return tmp;
+            }
+            foreach(Producto p in productos) //compare to devuelve 1, -1 y 0 osea que toma todo lo que es menos o igual a la fecha, es recomendable usar el comparer to
+            {
+                if (p.FechaVencimiento.CompareTo(dt) <= 0)
+                {
+                    Add(p, ref tmp);
+                }
+            }
+            return tmp;
+        }
     }
 }
