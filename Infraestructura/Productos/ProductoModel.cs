@@ -140,6 +140,11 @@ namespace Infraestructura.Productos
             int index = GetIndexById(id); // si el id es mayor lo manda a buscar, si no lo encuentra manda unnull en caso contrario devuelve la posicion del producto
 
             return index <= 0 ? null : productos[index];
+
+            public int GetLastProductoId()
+            {
+                return productos == null ? 0 : Productos[productos.Length - 1].Id;
+            }
        
         }
         #endregion

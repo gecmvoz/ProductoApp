@@ -24,8 +24,8 @@ namespace Domain.Entities
         public DateTime FechaVencimiento { get; set; }
         [JsonProperty]
         public UnidadMedida UnidadMedida { get; set; }
-        [JsonProperty]
 
+        [JsonProperty]
         public class ProductoPrecioComparer : IComparer<Producto>
         {
             public int Compare(Producto x, Producto y)
