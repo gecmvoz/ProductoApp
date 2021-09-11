@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Domain.Entities
 {
-   public  class Producto
+    public class Producto
     {
-        [JsonObject (Memberserialization.OptIn)]
+        [JsonObject(MemberSerialization.OptIn)] //este debe ser declarado en Domain
 
         [JsonProperty]
         public int Id { get; set; }
@@ -25,7 +25,9 @@ namespace Domain.Entities
         [JsonProperty]
         public UnidadMedida UnidadMedida { get; set; }
 
-        [JsonProperty]
+       // [JsonProperty]
+
+        //Creamos una clase interna
         public class ProductoPrecioComparer : IComparer<Producto>
         {
             public int Compare(Producto x, Producto y)
@@ -43,5 +45,7 @@ namespace Domain.Entities
                     return 0;
                 }
             }
+
+        }
     }
 }

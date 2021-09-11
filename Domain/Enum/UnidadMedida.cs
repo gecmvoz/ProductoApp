@@ -6,7 +6,7 @@ namespace Domain.Enum
 {
     public enum  UnidadMedida
     {
-        unidades,
+        Unidades,
         Litros,
         Mililitro,
         libras,

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Domain.Entities;
+using Domain.Enum;
+using Infraestructura.Productos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,29 +15,36 @@ namespace ProductosM1.Forms
 {
     public partial class FmrProducto : Form
     {
-        public ProductoModel PModel { get; set; }
+        public ProductoModel PModel { get; set; } //Di referencia a infraestructura
         public FmrProducto()
         {
             InitializeComponent();
         }
 
-        private void TextBox1_TextChanged(object sender, EventArgs e)
+        private void btnAceptar_Click(object sender, EventArgs e)
         {
             Producto p = new Producto()
             {
-                Id =PModel.GetlastProductoId() +1,
+                Id = PModel.GetLastProductoId() + 1,
                 Nombre = txtNombre.Text,
                 Descripcion = txtDescripcion.Text,
-                Existencia = (int) nudExistencia.Value,
+                Existencia = (int)nudExistencia.Value,
                 Precio = nudPrecio.Value,
-                FechaVencimiento = dtpCaducity
-            }
+                FechaVencimiento = dtpCaducity.Value,
+                UnidadMedida = (UnidadMedida)cmbUnidadMedida.SelectedIndex //using Domain.enum
+            };
+
+            PModel.Add(p);
+
+            Dispose(); //Metodo que cierra la ventana
         }
 
         private void FmrProducto_Load(object sender, EventArgs e)
         {
-            cmbUnidadMedida.Items.AddRange(Enum.GetValues(typeof(UnidadMedida)))
-                                                .Cast<>
+            cmbUnidadMedida.Items.AddRange(Enum.GetValues(typeof(UnidadMedida)).Cast<object>().ToArray());
+                                                
         }
+
+    
     }
 }
